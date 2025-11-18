@@ -80,7 +80,7 @@ my_model.compile(optimizer=opt, loss='mse', metrics=['mae'])
 history = my_model.fit(features_train_scaled, labels_train, epochs=40, batch_size=1, verbose=1)
 
 # Evaluating the trained model on the preprocessed data set
-res_mse, res_mae = my_model.evaluate(features_train_scaled, labels_train, verbose=0)
+res_mse, res_mae = my_model.evaluate(features_test_scaled, labels_test, verbose=0)
 
 print("Final MSE:", res_mse)
 print("Final MAE:", res_mae)
