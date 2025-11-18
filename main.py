@@ -5,6 +5,7 @@ from sklearn.preprocessing import Normalizer
 from sklearn.compose import ColumnTransformer
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import InputLayer
+from tensorflow.keras.layers import Dense
 
 dataset = pd.read_csv('life_expectancy.csv')
 
@@ -33,8 +34,8 @@ features = pd.get_dummies(features)
 features_train, features_test, labels_train, labels_test = train_test_split(features, labels, test_size=0.20, random_state=23)
 
 # Standardising/normalising your numerical features
-num_features = features.select_dtypes(include=['int64', 'float64']).columns
-ct = ColumnTransformer([('normalize', Normalizer(), num_features)], remainder = 'passthrough')
+numeric_features_names = features.select_dtypes(include=['int64', 'float64']).columns
+ct = ColumnTransformer([('normalize', Normalizer(), numeric_features_names)], remainder = 'passthrough')
 
 # Fitting instance ct to the training data and transforming it
 features_train_scaled = ct.fit_transform(features_train)
@@ -44,6 +45,19 @@ features_test_scaled = ct.transform(features_test)
 # |--------Building the model----------|
 
 
+# Creating an instance of the model
+my_model = Sequential()
 
+# Creating the input layer and adding it to the model instance
+num_features = len(numeric_features_names)
+input = InputLayer(input_shape=(num_features))
+my_model.add(input)
+
+# Adding a hidden layer
+my_model.add(Dense(64, activation='relu'))
+# Adding an output layer with one neuron
+my_model.add(Dense(1))
+
+print(my_model.summary())
 
 
