@@ -67,5 +67,8 @@ my_model.add(Dense(1))
 # Creating an instance of the Adam optimiser
 opt = Adam(learning_rate=0.01)
 
-
+# Compiling the model 
+# And using mean squared error for the loss
+# And Mean Absolute Error for metrics
+my_model.compile(loss='mse', metrics=['mae'], optmizer=opt)
 
