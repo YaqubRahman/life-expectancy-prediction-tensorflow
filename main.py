@@ -50,7 +50,7 @@ features_test_scaled = ct.transform(features_test)
 my_model = Sequential()
 
 # Creating the input layer and adding it to the model instance
-num_features = len(numeric_features_names)
+num_features = features_train_scaled.shape[1]
 input = InputLayer(input_shape=(num_features))
 my_model.add(input)
 
@@ -70,5 +70,17 @@ opt = Adam(learning_rate=0.01)
 # Compiling the model 
 # And using mean squared error for the loss
 # And Mean Absolute Error for metrics
-my_model.compile(loss='mse', metrics=['mae'], optmizer=opt)
+my_model.compile(optimizer=opt, loss='mse', metrics=['mae'])
 
+
+# |--------Fit and evaluate the model----------|
+
+
+# Training the model 
+history = my_model.fit(features_train_scaled, labels_train, epochs=40, batch_size=1, verbose=1)
+
+# Evaluating the trained model on the preprocessed data set
+res_mse, res_mae = my_model.evaluate(features_train_scaled, labels_train, verbose=0)
+
+print("Final MSE:", res_mse)
+print("Final MAE:", res_mae)
