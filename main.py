@@ -6,6 +6,7 @@ from sklearn.compose import ColumnTransformer
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import InputLayer
 from tensorflow.keras.layers import Dense
+from tensorflow.keras.optimizers import Adam
 
 dataset = pd.read_csv('life_expectancy.csv')
 
@@ -58,6 +59,13 @@ my_model.add(Dense(64, activation='relu'))
 # Adding an output layer with one neuron
 my_model.add(Dense(1))
 
-print(my_model.summary())
+#print(my_model.summary())
+
+
+# |--------Initializing the optimizer and compiling the model----------|
+
+# Creating an instance of the Adam optimiser
+opt = Adam(learning_rate=0.01)
+
 
 
